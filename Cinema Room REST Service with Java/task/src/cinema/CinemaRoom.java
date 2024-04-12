@@ -1,6 +1,7 @@
 package cinema;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CinemaRoom {
@@ -11,7 +12,7 @@ public class CinemaRoom {
     CinemaRoom(int numberOfRows, int numberOfColumns) {
         this.rows = numberOfRows;
         this.columns = numberOfColumns;
-        this.seats = new ArrayList<>(numberOfRows * numberOfColumns);
+        this.seats =  Collections.synchronizedList(new ArrayList<>(numberOfRows * numberOfColumns));
         int price = 10;
         for (int row = 1; row <= numberOfRows; row++) {
             price = row > this.rows / 2 && this.rows * this.columns > 60 ? 8 : 10;
@@ -37,7 +38,7 @@ public class CinemaRoom {
     }
 
     public List<Seat> getSeats() {
-        List<Seat> availableSeats = new ArrayList<>(rows * columns);
+        List<Seat> availableSeats =  Collections.synchronizedList(new ArrayList<>(rows * columns));
         for (Seat seat : seats) {
             if (seat.isAvailable()) {
                 availableSeats.add(getSeat(seat));
